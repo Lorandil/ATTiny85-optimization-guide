@@ -23,6 +23,7 @@ DISCLAIMER:
   smaller code than the Damellis core.
 
   ATTinyCore by Spence Konde:
+  https://github.com/SpenceKonde/ATTinyCore
   http://drazzy.com/package_drazzy.com_index.json
   
   ATTINY core by Damellis: http://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json
