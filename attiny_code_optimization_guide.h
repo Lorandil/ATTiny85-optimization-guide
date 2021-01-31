@@ -53,7 +53,7 @@ DISCLAIMER:
 
 * Check the use of global structures - using the local heap can be expensive :(
 
-* Avoid unnecessary 'break' commands to leave a loop. In my tests a break cost > 20 bytes.
+* Avoid unnecessary 'break' commands to leave a for-loop. In my tests a break cost > 20 bytes.
   Sometimes not 'break'ing only costs some more iterations. Depending on the required speed
   it may be acceptable to do some 'fruitless' iterations in favor of code size.
   
