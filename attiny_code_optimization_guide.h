@@ -1,5 +1,5 @@
 /*
-Sven's collected ATtiny85 C(++) code optimization tips for Arduino IDE (and gcc)
+Lorandil's collected ATtiny85 C(++) code optimization tips for Arduino IDE (and gcc)
 
 *************************************************************************************
 DISCLAIMER:
