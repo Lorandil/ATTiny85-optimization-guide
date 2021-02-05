@@ -19,17 +19,16 @@ DISCLAIMER:
 
 * Try different ATTINY cores. At the moment I'm using the ATTinyCore 
   from Spence Konde (v1.4.1) which has a really small overhead.
-  On my current project the ATTinyCore from Spence Konde delivers substantially 
-  smaller code than the Damellis core.
+  On my current project the ATTinyCore delivers substantially smaller code than the Damellis core.
 
   ATTinyCore by Spence Konde:
   https://github.com/SpenceKonde/ATTinyCore
   http://drazzy.com/package_drazzy.com_index.json
   
-  ATTINY core by Damellis: http://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json
+  ATTINY core by Damellis: 
+  http://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json
 
-
-* Don't use a bootloader, you don't need it and it will just cost flash memory.
+* Don't use a bootloader, you probably don't need it and it will just cost flash memory.
 
 
 * Enable link time optimization (LTO) if present, this will remove unused
@@ -37,7 +36,7 @@ DISCLAIMER:
 
   
 * If not required, disable 'millis()' and 'micros()' in the Spence Konde core - 
-  this will save a large amount of flash (in my case more than 150 bytes!)
+  this will save a large amount of flash (in my case more than 200 bytes!)
 
 
 * Don't use the Arduino 'pinMode()' command, instead write directly to the control registers.
