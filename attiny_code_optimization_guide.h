@@ -56,6 +56,23 @@ DISCLAIMER:
   }
   you might try
   for ( uint8_t bitValue = 1; bitValue != 0; bitValue <<= 1 ) { ... }
+  
+* Sometimes the gcc creates different code sizes for equivalent lines (why? incomplete optimization for Avr2?)
+  Given uint8_t x,y
+  x = y / 2; is two to six(see below) bytes smaller than the equivalent 
+  x = y >> 1;
+
+  Try this to reproduce the problem:
+  uint8_t a = random(12);
+  uint8_t b = random(24);
+  if ( a > b )
+  {
+    //b = a >> 1;	// 6 bytes larger! - why?
+    b = a / 2;
+    *c = b;	// c[] being some global uint8_t array (must be used in the program, otherwise gcc will remove the code!)
+  }
+  
+  Strange indeed... this may be fixed with a new compiler version
  
 * Don't initialize variables on declaration unless necessary, this saves at least
   2 bytes per variable. Try block initialization with 'memset()'.
