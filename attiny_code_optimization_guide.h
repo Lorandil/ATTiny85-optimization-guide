@@ -28,13 +28,17 @@ DISCLAIMER:
   
   ATTINY core by Damellis: http://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json
 
+
 * Don't use a bootloader, you don't need it and it will just cost flash memory.
+
 
 * Enable link time optimization (LTO) if present, this will remove unused
   functions from the binary during linking, so you won't need to comment them out.
+
   
 * If not required, disable 'millis()' and 'micros()' in the Spence Konde core - 
   this will save a large amount of flash (in my case more than 150 bytes!)
+
 
 * Don't use the Arduino 'pinMode()' command, instead write directly to the control registers.
   This easily saves > 100 bytes of flash!
@@ -45,18 +49,33 @@ DISCLAIMER:
   // configure A2 as output
   DDRB |= ( 1 << PB4 );
 
+
 * The ATtiny85 only supports bit shifting left/right by one bit at a time,
   so constructs with variable shifting like '1 << n' are quite expensive because 
   they require a loop.
+  Instead of
+  
+  for ( uint8_t n = 0; n < 8; n++ ) {
+	uint8 _ t bitValue = ( 1 << n ) 
+	...
+  }
+  
+  you might try
+  
+  for ( uint8_t bitValue = 1; bitValue != 0; bitValue <<= 1 ) { ... }
+  
 
 * Don't initialize variables on declaration unless necessary, this saves at least
   2 bytes per variable. Try block initialization with 'memset()'.
 
+
 * Check the use of global structures - using the local heap can be expensive :(
+
 
 * Avoid unnecessary 'break' commands to leave a for-loop. In my tests a break cost > 20 bytes.
   Sometimes not 'break'ing only costs some more iterations. Depending on the required speed
   it may be acceptable to do some 'fruitless' iterations in favor of code size.
+
   
 * Watch closely how your code changes affect the code size and/or the speed!
   Sometimes small changes result in much slower or much larger code.
@@ -69,9 +88,11 @@ DISCLAIMER:
   "void __attribute__ ((noinline)) foo();" or
   "void __attribute__ ((always_inline)) foo();"
   This can be painful to test, but may safe your day!
+
   
 * Using floating point types comes at a cost, because the ATtinys don't have an FPU
   (so all operations have to be emulated in software).
+
   
 * Avoid using library functions like 'sprintf()' or even 'malloc()' because they require
   parts of the library to be included in the flash memory.
