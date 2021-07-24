@@ -103,5 +103,9 @@ DISCLAIMER:
   This link shows some of the costs (in flash space and execution time):
   http://www.nongnu.org/avr-libc/user-manual/benchmarks.html
   For ATtiny85 you have to refer to the Avr2 columns.
+
+## Use if-then instead of switch for up to two conditions
+Up to two conditions two if-then statements are shorter than a switch statement with two 'case' statements.
+From three statements on, 'switch' requires less flash.
   
 */
