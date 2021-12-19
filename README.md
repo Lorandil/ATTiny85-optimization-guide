@@ -1,12 +1,34 @@
-# ATTiny85 optimization guide
-This is a collection of my experiences and thoughts about code optimization on an ATtiny85 in C/C++ using the Arduino IDE.
+# Lorandil's collected ATtiny85 C(++) code optimization tips for Arduino IDE (and gcc)
+
+*************************************************************************************
+DISCLAIMER:
+  Please note, that these tips should not be considered "best practice" in general!<br>
+  Always try to create good code - but if everything else fails, give these tips a try ;)
+  
+  I assembled these tips during my own projects, hopefully most observations are
+  accurate. If you find any mistakes or have additional insights (or helpful) links, 
+  please let me know :)
  
-### Please don't consider these tips as "best practice" - they are not (nor are the intended to be)!
-### But if you fight desperately for the last free flash bytes, give these ideas a try!
+  All product and company names are trademarks™ or registered® trademarks of their respective holders.
+*************************************************************************************
+
+# General Optimization Tips
  
- 
-# Gemeral Optimization Tips
- 
+* ALWAYS CHECK THE SIZE USING AN ATTINY85 CORE!
+  Other controllers (like ATMEGA328P or ATMEGA2560) might react different to optimization
+  or support other feature sets, resulting in different code sizes.
+
+* Try different ATtiny cores. At the moment I'm using the ATTinyCore 
+  from Spence Konde (v1.5.2) which has a really small overhead.<br>
+  On my current project the ATTinyCore delivers substantially smaller code than the Damellis core.
+
+  ATTinyCore by Spence Konde:
+  <br>https://github.com/SpenceKonde/ATTinyCore
+  <br>http://drazzy.com/package_drazzy.com_index.json
+  
+  ATTINY core by Damellis: 
+  <br>http://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json
+  
 * Don't use a bootloader, you probably don't need it and it will just cost a lot of flash memory.
 
 * Enable link time optimization (LTO) if present in your core, this will remove unused
@@ -44,9 +66,9 @@ This is a collection of my experiences and thoughts about code optimization on a
 
 * Avoid using library functions like 'sprintf()' or even 'malloc()' because they require
   parts of the library to be included in the flash memory.
-  This link shows some of the costs (in flash space and execution time):<BR>
+  This link shows some of the costs (in flash space and execution time):<br>
   http://www.nongnu.org/avr-libc/user-manual/benchmarks.html.
-  <BR>
+  <br>
   For ATtiny85 you have to refer to the Avr2 columns.
 
  
@@ -57,7 +79,7 @@ This is a collection of my experiences and thoughts about code optimization on a
   this will save a large amount of flash (in my case more than 200 bytes!)
  
 * Don't use the Arduino 'pinMode()' command, instead write directly to the control registers.
-  This easily saves > 100 bytes of flash!<BR>
+  This easily saves > 100 bytes of flash!<br>
   For example the initialization of a TinyJoypad just requires these two lines of code:
   
 ```javascript
