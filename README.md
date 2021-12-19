@@ -43,7 +43,23 @@ DISCLAIMER:
 * Use a default branch on all `switch`-statements!
   Even if all the sensible `case`s are coded, the compiler doesn't know that other values won't happen.
   Marking one of the existing cases as `default` enables the compiler to map all unhandled values to this
-  default case, which will save code.
+  case, which will save code:
+  ```javascript
+  uint8_t x;
+  ...
+  switch( x )
+  {
+  case 1:
+  	...
+	break;
+  ...
+  case 10:
+  default: // adding 'default' to one 'case' saves flash memory
+    	...
+	break;
+  }
+  ```
+  
    
 * Avoid unnecessary `break` commands to leave a for-loop. In my tests a break cost > 20 bytes.
   <br>Sometimes not breaking only costs some more iterations and depending on the required speed it may 
@@ -67,11 +83,10 @@ DISCLAIMER:
 
 * Avoid using powerful library functions like `sprintf()` or even `malloc()` because they require
   parts of the library to be included in the flash memory.
-  This link shows some of the costs (in flash space and execution time):<br>
+  This link shows some of the costs (in flash space and execution time) -
+  *for ATtiny85 you have to refer to the Avr2 columns*.<br>
   http://www.nongnu.org/avr-libc/user-manual/benchmarks.html.
-  <br>
-  For ATtiny85 you have to refer to the Avr2 columns.
-
+  
  
 # ATtiny85 Specific Optimizations for Arduino IDE
 
