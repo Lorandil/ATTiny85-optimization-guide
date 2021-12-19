@@ -1,4 +1,4 @@
-# Lorandil's collected ATtiny85 C(++) code optimization tips for Arduino IDE (and gcc)
+# Lorandil's Collected ATtiny85 C(++) Code Optimization Tips for Arduino IDE (and gcc)
 
 *************************************************************************************
 DISCLAIMER:
@@ -35,18 +35,19 @@ DISCLAIMER:
   functions from the binary file during linking, so you won't need to comment code out.
    
 * Don't initialize variables on declaration unless necessary, this saves at least
-  2 bytes per variable. Try block initialization with 'memset()'.
+  2 bytes per variable.
+  <br>Try block initialization with `memset()`.
 
 * Check the use of global structures - using the local heap can be expensive :(
 
-* Use a default branch on all 'switch'-statements!
-  Even if all the sensible 'case's are coded, the compiler doesn't know that other values won't happen.
-  Marking one of the existing cases as 'default' enables the compiler to map all unhandled values to this
+* Use a default branch on all `switch`-statements!
+  Even if all the sensible `case`s are coded, the compiler doesn't know that other values won't happen.
+  Marking one of the existing cases as `default` enables the compiler to map all unhandled values to this
   default case, which will save code.
    
-* Avoid unnecessary 'break' commands to leave a for-loop. In my tests a break cost > 20 bytes.
-  Sometimes not 'break'ing only costs some more iterations. Depending on the required speed
-  it may be acceptable to do some 'fruitless' iterations in favor of code size.
+* Avoid unnecessary `break` commands to leave a for-loop. In my tests a break cost > 20 bytes.
+  <br>Sometimes not breaking only costs some more iterations and depending on the required speed it may 
+  be acceptable to do some 'fruitless' iterations in favor of code size.
    
 * Watch closely how your code changes affect the code size and/or the speed!
   Sometimes small changes result in much slower or much larger code.
@@ -64,7 +65,7 @@ DISCLAIMER:
 * Using floating point types comes at a cost, because the ATtinys don't have an FPU
   (so all operations have to be emulated in software).
 
-* Avoid using library functions like 'sprintf()' or even 'malloc()' because they require
+* Avoid using powerful library functions like `sprintf()` or even `malloc()` because they require
   parts of the library to be included in the flash memory.
   This link shows some of the costs (in flash space and execution time):<br>
   http://www.nongnu.org/avr-libc/user-manual/benchmarks.html.
@@ -78,7 +79,7 @@ DISCLAIMER:
 * If not required, disable 'millis()' and 'micros()' in the ATtinyCore by Spence Konde - 
   this will save a large amount of flash (in my case more than 200 bytes!)
  
-* Don't use the Arduino 'pinMode()' command, instead write directly to the control registers.
+* Don't use the Arduino `pinMode()` command, instead write directly to the control registers.
   This easily saves > 100 bytes of flash!<br>
   For example the initialization of a TinyJoypad just requires these two lines of code:
   
@@ -90,7 +91,7 @@ DISCLAIMER:
 ```
 
 * The ATtiny85 only supports bit shifting left/right by one bit at a time,
-  so constructs with variable shifting like '1 << n' are quite expensive because 
+  so constructs with variable shifting like `1 << n` are quite expensive because 
   they require a loop.
   Instead of
 ```javascript
