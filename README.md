@@ -40,8 +40,8 @@ DISCLAIMER:
 
 * Check the use of global structures - using the local heap can be expensive :(
 
-* Use a default branch on all `switch`-statements!
-  Even if all the sensible `case`s are coded, the compiler doesn't know that other values won't happen.
+* Use a `default:` label on all `switch`-statements (if possible)!
+  Even if all the sensible `case`s are coded, the compiler doesn't know that other values won't happen (but perhaps you do!).
   Marking one of the existing cases as `default` enables the compiler to map all unhandled values to this
   case, which will save code:
   ```javascript
@@ -87,6 +87,32 @@ DISCLAIMER:
   *for ATtiny85 you have to refer to the Avr2 columns*.<br>
   http://www.nongnu.org/avr-libc/user-manual/benchmarks.html.
   
+* If you occasionally need random numbers - don't use `rand()`.
+  A free running timer without prescaler delivers fast changing numbers with a very small flash footprint:
+
+  ```javascript
+  // Initialize ATTiny85's timer 0 to run at full cpu clock (prescaler = 1).
+  // The timer will count from its starting value (which does not require to be set for this use case)
+  // to 255 and overflow to 0 and continue counting until the power is cut.
+  TCCR0A = 0x00;          // normal mode
+  TCCR0B = ( 1 << CS00 ); // prescaling with 1
+  ```
+  
+  If you access the timer counter register after a user action, the insanely
+  fast running timer returns an unpredictable number.
+  The randomness of the value depends on the moment of the user action (which can be 
+  expected to be random when working with a timer running at MHz speed).
+  
+  ```javascript
+  // wait for some user action (e.g. button pressed)
+  ...
+  // access timer register to get an unpredictable number
+  uint8_t nearRandomValue = TCNT0;
+  ```
+  
+  Please note, that you will only get one(!) pseudo random number per user action.
+  The next number will have a fix distance to the previous number (remember, it's just a counter after all)!
+ 
  
 # ATtiny85 Specific Optimizations for Arduino IDE
 
