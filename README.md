@@ -87,7 +87,10 @@ DISCLAIMER:
   *for ATtiny85 you have to refer to the Avr2 columns*.<br>
   http://www.nongnu.org/avr-libc/user-manual/benchmarks.html.
   
-* If you occasionally need random numbers - don't use `rand()`.
+  
+# Random Numbers
+  
+  If you occasionally need random numbers - don't use `rand()` and `srand()`.
   A free running timer without prescaler delivers fast changing numbers with a very small flash footprint:
 
   ```javascript
@@ -105,12 +108,12 @@ DISCLAIMER:
   
   ```javascript
   // wait for some user action (e.g. button pressed)
-  ...
+  while( !isButtonPressed() );
   // access timer register to get an unpredictable number
   uint8_t nearRandomValue = TCNT0;
   ```
   
-  Please note, that you will only get one(!) pseudo random number per user action.
+  Please note, that this method will only provide one(!) pseudo random number per user action.
   The next number will have a fix distance to the previous number (remember, it's just a counter after all)!
  
  
