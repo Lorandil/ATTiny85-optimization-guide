@@ -140,7 +140,7 @@ DISCLAIMER:
   Instead of
 ```javascript
   for ( uint8_t n = 0; n < 8; n++ ) {
-	uint8 _ t bitValue = ( 1 << n ) 
+	uint8_t bitValue = ( 1 << n ) 
 	...
   }
 ```
