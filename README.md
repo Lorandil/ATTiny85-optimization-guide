@@ -32,7 +32,7 @@ DISCLAIMER:
 * Don't use a bootloader, you probably don't need it and it will just cost a lot of flash memory.
 
 * Enable link time optimization (LTO) if present in your core, this will remove unused
-  functions from the binary file during linking, so you won't need to comment code out.
+  functions from the binary file during linking, so you won't need to comment out code.
    
 * Don't initialize variables on declaration unless necessary, this saves at least
   2 bytes per variable.
@@ -41,7 +41,7 @@ DISCLAIMER:
 * Check the use of global structures - using the local heap can be expensive :(
 
 * Use a `default:` label on all `switch`-statements (if possible)!
-  Even if all the sensible `case`s are coded, the compiler doesn't know that other values won't happen (but perhaps you do!).
+  Even if all the sensible `case`s are coded, the compiler doesn't know that other values won't happen (but perhaps you do?!).
   Marking one of the existing cases as `default` enables the compiler to map all unhandled values to this
   case, which will save code:
   ```javascript
