@@ -77,6 +77,10 @@ DISCLAIMER:
   "void __attribute__ ((noinline)) foo();" or
   "void __attribute__ ((always_inline)) foo();"
 ```
+  You might also want to try playing with the compiler's optimization strategy on a per function basis:
+```javascript
+__attribute__((optimize("O0"))) 
+```
 
 * Using floating point types comes at a cost, because the ATtinys don't have an FPU
   (so all operations have to be emulated in software).
