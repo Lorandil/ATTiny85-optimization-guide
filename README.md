@@ -163,8 +163,10 @@ __attribute__((optimize("O0")))
 
   Try this code to reproduce the problem:
 ```javascript
-  uint8_t a = random( 12 );
-  uint8_t b = random( 24 );
+  extern uint8_t a;
+  extern uint8_t b;
+  extern uint8_t c[100];
+
   if ( a > b )
   {
     //b = a >> 1;	// 6 bytes larger! - why?
@@ -174,6 +176,25 @@ __attribute__((optimize("O0")))
   }
 ```
   
-  Strange indeed... this may be fixed/optmized in a new compiler version (or perhaps depends on optimization settings?)
+I took a closer look with Compiler Explorer (www.godbolt.org) and this was the result:
+```javascript
+  b = a >> 1;
+```
+compiles to an irritating 16 bit rotation (with the lsb being stored as a result)
+```javascript
+  ldi r25,0
+  asr r25
+  r24
+```
 
+whereas 
+```javascript
+  b = a / 2;
+```
+compiles as expected to
+```javascript
+lsr r24
+```
+
+Note: AVR gcc 14.2.0 creates the short version for both source code variants.
  
